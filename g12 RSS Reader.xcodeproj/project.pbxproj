@@ -463,6 +463,7 @@
 				109878FC19903752006C9F0E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		109878FD19903752006C9F0E /* Build configuration list for PBXNativeTarget "g12 RSS ReaderTests" */ = {
 			isa = XCConfigurationList;
@@ -471,6 +472,7 @@
 				109878FF19903752006C9F0E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
