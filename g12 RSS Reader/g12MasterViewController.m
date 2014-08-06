@@ -62,8 +62,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-//    cell.textLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
-    cell.textLabel.text = [[feeds objectAtIndex:indexPath.row] objectForKey:@"title"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+//    cell.textLabel.text = [[feeds objectAtIndex:indexPath.row] objectForKey:@"title"];
     return cell;
 }
 
