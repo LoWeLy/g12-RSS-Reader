@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface g12MasterViewController : UITableViewController
+@interface g12MasterViewController : UITableViewController <NSXMLParserDelegate>
+
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
