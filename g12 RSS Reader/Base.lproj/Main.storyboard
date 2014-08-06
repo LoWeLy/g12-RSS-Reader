@@ -60,7 +60,7 @@
                         </prototypes>
                         <sections/>
                     </tableView>
-                    <navigationItem key="navigationItem" title="g12-Squad RSS Reader" id="tQt-TN-PWz"/>
+                    <navigationItem key="navigationItem" title="g12-Squad RSS Reader 1.0" id="tQt-TN-PWz"/>
                     <connections>
                         <outlet property="tableView" destination="mLL-gJ-YKr" id="byg-rR-Tu4"/>
                     </connections>
