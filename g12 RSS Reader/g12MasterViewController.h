@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "defines.h"
 
 @interface g12MasterViewController : UITableViewController <NSXMLParserDelegate>
 
+- (BOOL) validateUrl: (NSString *) candidate;
+
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (copy) NSString *url;
+
+- (IBAction)AddRSS:(UIBarButtonItem *)sender;
 
 @end

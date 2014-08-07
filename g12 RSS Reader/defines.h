@@ -1,0 +1,1 @@
+#define RSSFileName @"RSSList.xml"

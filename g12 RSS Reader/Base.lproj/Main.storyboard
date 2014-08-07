@@ -60,7 +60,20 @@
                         </prototypes>
                         <sections/>
                     </tableView>
-                    <navigationItem key="navigationItem" title="g12-Squad RSS Reader" id="tQt-TN-PWz"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="RSS Reader" id="tQt-TN-PWz">
+                        <barButtonItem key="leftBarButtonItem" title="View RSS" id="3il-n0-RZ5">
+                            <connections>
+                                <action selector="AddRSS:" destination="pGg-6v-bdr" id="Wxc-Yf-Raf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="RSS List" id="d4d-JV-h0n">
+                            <connections>
+                                <segue destination="KKJ-4E-WTc" kind="push" id="PlZ-rt-qq5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="mLL-gJ-YKr" id="byg-rR-Tu4"/>
                     </connections>
@@ -68,6 +81,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="459" y="64"/>
+        </scene>
+        <!--G12RSS List - RSS List-->
+        <scene sceneID="cEb-PB-muS">
+            <objects>
+                <tableViewController title="RSS List" id="KKJ-4E-WTc" customClass="g12RSSList" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="73C-iD-ePN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RSSCell" id="PEP-6K-xNS">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PEP-6K-xNS" id="vZE-aV-dA4">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="pGg-6v-bdr" kind="push" identifier="returnToMain" id="QsM-Bf-x84"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="KKJ-4E-WTc" id="5zU-QE-aP6"/>
+                            <outlet property="delegate" destination="KKJ-4E-WTc" id="y0t-4D-bIc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="NbC-Xl-VGA"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qXK-E5-LQL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="902" y="757"/>
         </scene>
         <!--G12 Detail View Controller - Back-->
         <scene sceneID="Cn3-H9-jdl">
@@ -104,4 +149,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="QsM-Bf-x84"/>
+    </inferredMetricsTieBreakers>
 </document>
