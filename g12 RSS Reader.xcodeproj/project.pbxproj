@@ -22,6 +22,10 @@
 		109878ED19903752006C9F0E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109878CC19903752006C9F0E /* UIKit.framework */; };
 		109878F519903752006C9F0E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 109878F319903752006C9F0E /* InfoPlist.strings */; };
 		109878F719903752006C9F0E /* g12_RSS_ReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 109878F619903752006C9F0E /* g12_RSS_ReaderTests.m */; };
+		109A39951998C69B008C5D78 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 109A39931998C69B008C5D78 /* Default.png */; };
+		109A39961998C69B008C5D78 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 109A39941998C69B008C5D78 /* Default@2x.png */; };
+		109A39981998C768008C5D78 /* Default@640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 109A39971998C768008C5D78 /* Default@640x1136.png */; };
+		10AE81FC199A5827000C83E1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AE81FB199A5827000C83E1 /* Default-568h@2x.png */; };
 		10C8CC14199330B800898353 /* g12RSSList.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C8CC13199330B800898353 /* g12RSSList.m */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +61,10 @@
 		109878F219903752006C9F0E /* g12 RSS ReaderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "g12 RSS ReaderTests-Info.plist"; sourceTree = "<group>"; };
 		109878F419903752006C9F0E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		109878F619903752006C9F0E /* g12_RSS_ReaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = g12_RSS_ReaderTests.m; sourceTree = "<group>"; };
+		109A39931998C69B008C5D78 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		109A39941998C69B008C5D78 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		109A39971998C768008C5D78 /* Default@640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@640x1136.png"; sourceTree = "<group>"; };
+		10AE81FB199A5827000C83E1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		10C8CC12199330B800898353 /* g12RSSList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = g12RSSList.h; sourceTree = "<group>"; };
 		10C8CC13199330B800898353 /* g12RSSList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = g12RSSList.m; sourceTree = "<group>"; };
 		10C8CC1519933AF300898353 /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
@@ -89,6 +97,7 @@
 		109878BC19903752006C9F0E = {
 			isa = PBXGroup;
 			children = (
+				109A39921998C69B008C5D78 /* Sources */,
 				109878CE19903752006C9F0E /* g12 RSS Reader */,
 				109878F019903752006C9F0E /* g12 RSS ReaderTests */,
 				109878C719903752006C9F0E /* Frameworks */,
@@ -162,6 +171,17 @@
 				109878F319903752006C9F0E /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		109A39921998C69B008C5D78 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				10AE81FB199A5827000C83E1 /* Default-568h@2x.png */,
+				109A39971998C768008C5D78 /* Default@640x1136.png */,
+				109A39931998C69B008C5D78 /* Default.png */,
+				109A39941998C69B008C5D78 /* Default@2x.png */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,8 +262,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				109878E419903752006C9F0E /* Images.xcassets in Resources */,
+				109A39981998C768008C5D78 /* Default@640x1136.png in Resources */,
 				109878D319903752006C9F0E /* InfoPlist.strings in Resources */,
+				109A39961998C69B008C5D78 /* Default@2x.png in Resources */,
 				109878DC19903752006C9F0E /* Main.storyboard in Resources */,
+				10AE81FC199A5827000C83E1 /* Default-568h@2x.png in Resources */,
+				109A39951998C69B008C5D78 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,7 +414,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "g12 RSS Reader/g12 RSS Reader-Prefix.pch";
 				INFOPLIST_FILE = "g12 RSS Reader/g12 RSS Reader-Info.plist";
@@ -403,7 +426,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "g12 RSS Reader/g12 RSS Reader-Prefix.pch";
 				INFOPLIST_FILE = "g12 RSS Reader/g12 RSS Reader-Info.plist";

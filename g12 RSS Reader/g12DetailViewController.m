@@ -10,14 +10,12 @@
 
 @implementation g12DetailViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    NSURL *myURL = [NSURL URLWithString: [self.url stringByAddingPercentEscapesUsingEncoding:
-                                          NSUTF8StringEncoding]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:myURL];
-    [self.webView loadRequest:request];
+
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString: [_url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]]; //Load web to screen
 }
 
 @end

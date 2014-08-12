@@ -7,187 +7,237 @@
 //
 
 #import "g12MasterViewController.h"
-
 #import "g12DetailViewController.h"
+#import "g12RSSList.h"
 
 @interface g12MasterViewController () {
-    NSXMLParser *parser;
-    NSMutableArray *feeds;
+    NSXMLParser *parser; //Parser
+    NSMutableArray *feeds; //Stuff for parsing
     NSMutableDictionary *item;
     NSMutableString *title;
     NSMutableString *link;
     NSString *element;
-    NSURL *urlUrl;
-    BOOL isElement;
+    NSURL *urlUrl; //NSURL
+    BOOL isItem; //Switches
     BOOL isParsed;
-    UIAlertView *alert;
-    
-    NSMutableArray *RSSList;
-    NSString *ArrayFileName;
+    UIAlertView *alert; //Alert window
+    NSString *ArrayFileName; //Name of file
+    NSMutableArray *RSSList; //RSS list from file
+    UILabel *welcomeLabel; //Black screen with text when loading
+    UIWindow *mainWindow; //Main window for borders and sublayering it
 }
 
 @end
 
 @implementation g12MasterViewController
 
-- (BOOL) validateUrl: (NSString *) candidate {
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// M Y   F U N C S ////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - My Funtions
+- (BOOL)validateUrl: (NSString *) candidate {
     NSString *urlRegEx =
     @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
     NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
     return [urlTest evaluateWithObject:candidate];
-}
+} //Checking for correct URL
 
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-}
+- (void)fadeOutLabel {
+    [UIView animateWithDuration:0.5
+                          delay:0.0  /* do not add a delay because we will use performSelector. */
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^ {
+                         welcomeLabel.alpha = 0.0;
+                     }
+                     completion:^(BOOL finished) {
+                         [welcomeLabel removeFromSuperview];
+                     }];
+} //Animation of fade
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    isElement = NO;
-    isParsed = NO;
+- (void)fadeBlackScreen {
+    welcomeLabel = [[UILabel alloc] initWithFrame:mainWindow.bounds];
+    [welcomeLabel setTextColor:[UIColor whiteColor]];
+    [welcomeLabel setBackgroundColor:[UIColor blackColor]];
+    [welcomeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 56.0f]];
+    [welcomeLabel setText:[NSString stringWithFormat:@"Loading: \n%@",_url]];
+    [welcomeLabel setTextAlignment:NSTextAlignmentCenter];
+    [welcomeLabel setAdjustsFontSizeToFitWidth:YES];
+    [welcomeLabel setNumberOfLines:2];
+    [welcomeLabel setMinimumScaleFactor:0.1];
+    [welcomeLabel setShadowColor:[UIColor grayColor]];
+    [welcomeLabel setShadowOffset:CGSizeMake( 1.5, 1.5)];
+    [welcomeLabel setCenter:self.view.center];
+    [mainWindow addSubview:welcomeLabel];
+//    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fadeOutLabel) userInfo:nil repeats:NO];
+} //Fade black screen with text when loading
+
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// V I E W   L O A D //////////////
+/////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - View Funtions
+
+- (void)viewDidLoad {
     
-    //Creating a file path under iOS:
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    ArrayFileName = [documentsDirectory stringByAppendingPathComponent:RSSFileName];
-//    NSError *temperr = [[NSError alloc] init];
-//    [[NSFileManager defaultManager] removeItemAtPath:ArrayFileName error:&temperr];
-    NSArray *tempArray = [[NSArray alloc] initWithContentsOfFile:ArrayFileName];
-    RSSList = [[NSMutableArray alloc] init];
-    [RSSList addObjectsFromArray:tempArray];
-    if (!_url)
-    {
+    [super viewDidLoad];
+    
+    _refreshList = YES; //Init refresh switch
+    mainWindow = [[UIApplication sharedApplication].delegate window]; //Get main window
+    ArrayFileName = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:RSSFileName]; //Get full file name
+    RSSList = [[NSMutableArray alloc] initWithArray:[[NSArray alloc] initWithContentsOfFile:ArrayFileName]]; //Restore RSS list from file to array
+    if (!_url) {
         if (RSSList) {
             _url = RSSList[0];
+        } else {
+            _url = @"http://images.apple.com/main/rss/hotnews/hotnews.rss";
         }
-        else
-        {
-        _url = @"http://images.apple.com/main/rss/hotnews/hotnews.rss";
-        }
-    }
-    urlUrl = [[NSURL alloc] initWithString:_url];
+    } //Init URL
+} //Various inits
+
+- (void)viewWillAppear:(BOOL)animated {
     
-    feeds = [[NSMutableArray alloc] init];
-    parser = [[NSXMLParser alloc] initWithContentsOfURL:urlUrl];
-    [parser setDelegate:self];
-    [parser setShouldResolveExternalEntities:NO];
-    [parser parse];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table View
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return feeds.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-//    cell.textLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%d) %@", indexPath.row, [[feeds objectAtIndex:indexPath.row] objectForKey:@"title"]] ;
-    return cell;
-}
-
-#pragma mark - parser
-
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
-{
-    element = elementName;
+    if (!urlUrl) urlUrl = [[NSURL alloc] initWithString:_url]; //Getting URL as NSURL from file or string
     
-    if ([element isEqualToString:@"item"])
-    {
-        item = [[NSMutableDictionary alloc] init];
-        title = [[NSMutableString alloc] init];
-        link = [[NSMutableString alloc] init];
-        isElement = YES;
-        isParsed = YES;
-    }
-}
-
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
-{
-    if (isElement) {
-        if ([element isEqualToString:@"title"])
-        {
-            [title appendString:string];
-        } else if ([element isEqualToString:@"link"])
-        {
-            [link appendString:string];
-        }
-    }
-    
-}
-
-- (void) parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-{
-    if ([elementName isEqualToString:@"item"]) {
-        [item setObject:title forKey:@"title"];
-        [item setObject:link forKey:@"link"];
-        isElement = NO;
+    if (![urlUrl.absoluteString isEqualToString:_url] || _refreshList) {
         
-        [feeds addObject:[item copy]];
+        urlUrl = [NSURL URLWithString:_url];
+        [self fadeBlackScreen];
     }
-}
+} //Fade black screen with text if reloading other link or Refresh is YES (->)
 
-- (void) parserDidEndDocument:(NSXMLParser *)parser
-{
-    [self.tableView reloadData];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+- (void)viewDidAppear:(BOOL)animated {
+    if (![urlUrl.absoluteString isEqualToString:_url] || _refreshList) {
         
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSString *string = [feeds[indexPath.row] objectForKey: @"link"];
-        [[segue destinationViewController] setUrl:string];        
+        _refreshList = NO;
+        isItem = NO;
+        isParsed = NO; //Init switches for parsing
+        feeds = [[NSMutableArray alloc] init];
+        parser = [[NSXMLParser alloc] initWithContentsOfURL:urlUrl];
+        [parser setDelegate:self];
+        [parser setShouldResolveExternalEntities:NO];
+        [parser parse]; //Parser start
     }
-}
+} //(->) and parsing it a bit later
 
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// T O P   B A R //////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Top Bar Items
 
 - (IBAction)AddRSS:(UIButton *)sender {
+    
     alert = [[UIAlertView alloc] initWithTitle:@"" message:@"Please enter RSS path:" delegate:self cancelButtonTitle:@"Add RSS" otherButtonTitles:nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     UITextField * alertTextField = [alert textFieldAtIndex:0];
     alertTextField.placeholder = @"RSS path";
-    alertTextField.text = @"http://lenta.ru/rss";
+    alertTextField.text = @"http://news.tut.by/rss/all.rss";
     [alert show];
-}
+} //Create alert window to receive new RSS
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView == alert) {
-        NSString *enteredUrl = [[alertView textFieldAtIndex:0] text];
-        if ([self validateUrl:enteredUrl]) {
+        _url = [[alertView textFieldAtIndex:0] text];
+        if ([self validateUrl:_url]) {
             
+            urlUrl = [NSURL URLWithString:_url];
             feeds = [[NSMutableArray alloc] init];
-            urlUrl = [NSURL URLWithString:enteredUrl];
             parser = [[NSXMLParser alloc] initWithContentsOfURL:urlUrl];
-            
             [parser setDelegate:self];
             [parser setShouldResolveExternalEntities:NO];
             isParsed = NO;
+            [self fadeBlackScreen];
             [parser parse];
             
-            if ( (![RSSList containsObject:enteredUrl]) && (isParsed) ) {
-                [RSSList addObject:[enteredUrl copy]];
+            if ( (![RSSList containsObject:_url]) && (isParsed) ) {
+                [RSSList addObject:[_url copy]];
                 [RSSList writeToFile:ArrayFileName atomically:YES];
             }
         }
     }
-}
+} //Processing alert window link
+
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// T A B L E //////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Table View
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+} //1
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return feeds.count;
+} //feeds.count
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    cell.textLabel.text = [NSString stringWithFormat:@"%d) %@", indexPath.row + 1, [[feeds objectAtIndex:indexPath.row] objectForKey:@"title"]];
+
+    cell.backgroundColor = Rgb2UIColor(255, (double) 128 + (indexPath.row + 1) * 127 / feeds.count, (double) 0 + (indexPath.row + 1) * 255 / feeds.count);
+    return cell;
+} //Displays all cells and making them gradient
+
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// P A R S E R ////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Parser
+
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
+    
+    element = elementName;
+    
+    if ([element isEqualToString:@"item"]) {
+        item = [[NSMutableDictionary alloc] init];
+        title = [[NSMutableString alloc] init];
+        link = [[NSMutableString alloc] init];
+        isItem = YES;
+        isParsed = YES;
+    }
+} //Gets element
+
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
+    
+    if (isItem) {
+        if (([element isEqualToString:@"title"]) && ([string rangeOfString:@"\n"].location == NSNotFound)) {
+            string = [string stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
+            [title appendString:string];
+            NSLog(@"%@",string);
+        } else if (([element isEqualToString:@"link"]) && ([string rangeOfString:@"\n"].location == NSNotFound)) {
+            [link appendString:string];
+            NSLog(@"%@",string);
+        }
+    }
+    
+} //Fill title and link
+
+- (void) parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
+    
+    if ([elementName isEqualToString:@"item"]) {
+        [item setObject:title forKey:@"title"];
+        [item setObject:link forKey:@"link"];
+        isItem = NO;
+        
+        [feeds addObject:[item copy]];
+    }
+} //Fill feeds array with filled dictionary item
+
+- (void) parserDidEndDocument:(NSXMLParser *)parser {
+    [self.tableView reloadData];
+    [self fadeOutLabel]; //Parse finished so let's show results
+} //Refresh table view
+
+/////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// S E G U E //////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+        [[segue destinationViewController] setUrl:[feeds[[self.tableView indexPathForSelectedRow].row] objectForKey: @"link"]];
+    } else if ([[segue identifier] isEqualToString:@"ShowRSS"]){
+        [[segue destinationViewController] setMasterController:self];
+    }
+} //Do stuff for segue
 
 @end

@@ -12,4 +12,6 @@
 
 @interface g12RSSList : UITableViewController
 
+@property (assign) id masterController;
+
 @end

@@ -69,7 +69,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="RSS List" id="d4d-JV-h0n">
                             <connections>
-                                <segue destination="KKJ-4E-WTc" kind="push" id="PlZ-rt-qq5"/>
+                                <segue destination="KKJ-4E-WTc" kind="push" identifier="ShowRSS" id="PlZ-rt-qq5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -91,16 +91,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RSSCell" id="PEP-6K-xNS">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RSSCell" textLabel="H6n-c3-1WF" style="IBUITableViewCellStyleDefault" id="EoD-1w-3bw">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PEP-6K-xNS" id="vZE-aV-dA4">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EoD-1w-3bw" id="g0A-Ld-3Pd">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Text" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="7" preferredMaxLayoutWidth="270" id="H6n-c3-1WF">
+                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="pGg-6v-bdr" kind="push" identifier="returnToMain" id="QsM-Bf-x84"/>
-                                </connections>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="userComments">
+                                    <fragment content="123">
+                                        <attributes>
+                                            <font key="NSFont" size="9" name=".LucidaGrandeUI"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -117,7 +132,7 @@
         <!--G12 Detail View Controller - Back-->
         <scene sceneID="Cn3-H9-jdl">
             <objects>
-                <viewController title="Back" id="Ah7-4n-0Wa" customClass="g12DetailViewController" sceneMemberID="viewController">
+                <viewController title="Back" wantsFullScreenLayout="YES" modalTransitionStyle="flipHorizontal" id="Ah7-4n-0Wa" customClass="g12DetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cIm-e0-J51"/>
                         <viewControllerLayoutGuide type="bottom" id="a0L-h9-sNL"/>
@@ -134,7 +149,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Content" id="cra-N8-TIN"/>
+                    <navigationItem key="navigationItem" title="Web" id="cra-N8-TIN"/>
                     <connections>
                         <outlet property="webView" destination="34Y-MX-pP5" id="asX-Xr-FMy"/>
                     </connections>
@@ -149,7 +164,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="QsM-Bf-x84"/>
-    </inferredMetricsTieBreakers>
 </document>

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "defines.h"
+#import "g12RSSList.h"
 
 @interface g12MasterViewController : UITableViewController <NSXMLParserDelegate>
 
@@ -16,7 +17,9 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (copy) NSString *url;
+@property BOOL refreshList;
 
 - (IBAction)AddRSS:(UIBarButtonItem *)sender;
+- (void) fadeOutLabel;
 
 @end
