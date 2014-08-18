@@ -68,6 +68,7 @@
 		10C8CC12199330B800898353 /* g12RSSList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = g12RSSList.h; sourceTree = "<group>"; };
 		10C8CC13199330B800898353 /* g12RSSList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = g12RSSList.m; sourceTree = "<group>"; };
 		10C8CC1519933AF300898353 /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		10FE654E19A22C64007EBD31 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +98,6 @@
 		109878BC19903752006C9F0E = {
 			isa = PBXGroup;
 			children = (
-				109A39921998C69B008C5D78 /* Sources */,
 				109878CE19903752006C9F0E /* g12 RSS Reader */,
 				109878F019903752006C9F0E /* g12 RSS ReaderTests */,
 				109878C719903752006C9F0E /* Frameworks */,
@@ -117,6 +117,7 @@
 		109878C719903752006C9F0E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				10FE654E19A22C64007EBD31 /* CoreData.framework */,
 				109878C819903752006C9F0E /* Foundation.framework */,
 				109878CA19903752006C9F0E /* CoreGraphics.framework */,
 				109878CC19903752006C9F0E /* UIKit.framework */,
@@ -137,8 +138,8 @@
 				109878E119903752006C9F0E /* g12DetailViewController.m */,
 				10C8CC12199330B800898353 /* g12RSSList.h */,
 				10C8CC13199330B800898353 /* g12RSSList.m */,
-				109878E319903752006C9F0E /* Images.xcassets */,
 				109878CF19903752006C9F0E /* Supporting Files */,
+				109A39921998C69B008C5D78 /* Sources */,
 			);
 			path = "g12 RSS Reader";
 			sourceTree = "<group>";
@@ -146,6 +147,7 @@
 		109878CF19903752006C9F0E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				109878E319903752006C9F0E /* Images.xcassets */,
 				109878D019903752006C9F0E /* g12 RSS Reader-Info.plist */,
 				109878D119903752006C9F0E /* InfoPlist.strings */,
 				109878D419903752006C9F0E /* main.m */,
@@ -181,7 +183,8 @@
 				109A39931998C69B008C5D78 /* Default.png */,
 				109A39941998C69B008C5D78 /* Default@2x.png */,
 			);
-			path = Sources;
+			name = Sources;
+			path = ../Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

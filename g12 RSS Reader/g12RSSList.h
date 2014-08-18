@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 g12-Squad. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "defines.h"
 #import "g12MasterViewController.h"
 

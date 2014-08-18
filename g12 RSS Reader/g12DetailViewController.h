@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 g12-Squad. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface g12DetailViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;

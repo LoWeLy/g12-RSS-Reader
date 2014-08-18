@@ -13,8 +13,6 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString: [_url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]]; //Load web to screen
 }
 

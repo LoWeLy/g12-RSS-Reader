@@ -13,16 +13,14 @@
 @interface g12MasterViewController () {
     NSXMLParser *parser; //Parser
     NSMutableArray *feeds; //Stuff for parsing
-    NSMutableDictionary *item;
-    NSMutableString *title;
-    NSMutableString *link;
-    NSString *element;
+    NSMutableDictionary *item; //Stuff for parsing
+    NSMutableString *title; //Stuff for parsing
+    NSMutableString *link; //Stuff for parsing
+    NSString *element; //Stuff for parsing
     NSURL *urlUrl; //NSURL
-    BOOL isItem; //Switches
-    BOOL isParsed;
+    BOOL isItem; //Switch for parsing
+    BOOL isParsed; //Switch for parsing
     UIAlertView *alert; //Alert window
-    NSString *ArrayFileName; //Name of file
-    NSMutableArray *RSSList; //RSS list from file
     UILabel *welcomeLabel; //Black screen with text when loading
     UIWindow *mainWindow; //Main window for borders and sublayering it
 }
@@ -82,13 +80,15 @@
     
     _refreshList = YES; //Init refresh switch
     mainWindow = [[UIApplication sharedApplication].delegate window]; //Get main window
-    ArrayFileName = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:RSSFileName]; //Get full file name
-    RSSList = [[NSMutableArray alloc] initWithArray:[[NSArray alloc] initWithContentsOfFile:ArrayFileName]]; //Restore RSS list from file to array
+    _ArrayFileName = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:RSSFileName]; //Get full file name
+    _RSSList = [[NSMutableArray alloc] initWithArray:[[NSArray alloc] initWithContentsOfFile:_ArrayFileName]]; //Restore RSS list from file to array
     if (!_url) {
-        if (RSSList) {
-            _url = RSSList[0];
+        if (_RSSList.count) {
+            _url = _RSSList[0];
         } else {
             _url = @"http://images.apple.com/main/rss/hotnews/hotnews.rss";
+            [_RSSList addObject:[_url copy]];
+            [_RSSList writeToFile:_ArrayFileName atomically:YES];
         }
     } //Init URL
 } //Various inits
@@ -147,9 +147,9 @@
             [self fadeBlackScreen];
             [parser parse];
             
-            if ( (![RSSList containsObject:_url]) && (isParsed) ) {
-                [RSSList addObject:[_url copy]];
-                [RSSList writeToFile:ArrayFileName atomically:YES];
+            if ( (![_RSSList containsObject:_url]) && (isParsed) ) {
+                [_RSSList addObject:[_url copy]];
+                [_RSSList writeToFile:_ArrayFileName atomically:YES];
             }
         }
     }
@@ -201,10 +201,8 @@
         if (([element isEqualToString:@"title"]) && ([string rangeOfString:@"\n"].location == NSNotFound)) {
             string = [string stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
             [title appendString:string];
-            NSLog(@"%@",string);
         } else if (([element isEqualToString:@"link"]) && ([string rangeOfString:@"\n"].location == NSNotFound)) {
             [link appendString:string];
-            NSLog(@"%@",string);
         }
     }
     

@@ -6,19 +6,18 @@
 //  Copyright (c) 2014 g12-Squad. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
 #import "defines.h"
 #import "g12RSSList.h"
 
 @interface g12MasterViewController : UITableViewController <NSXMLParserDelegate>
 
-- (BOOL) validateUrl: (NSString *) candidate;
-
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (copy) NSString *url;
 @property BOOL refreshList;
+@property NSMutableArray *RSSList; //RSS list from file
+@property NSString *ArrayFileName; //Name of file
 
+- (BOOL) validateUrl: (NSString *) candidate;
 - (IBAction)AddRSS:(UIBarButtonItem *)sender;
 - (void) fadeOutLabel;
 
