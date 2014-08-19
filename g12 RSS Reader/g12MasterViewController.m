@@ -155,60 +155,75 @@
 /////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Top Bar Items
 
-- (IBAction)AddRSS:(UIButton *)sender {
+- (void)AddRSS {
     
-    alert = [[UIAlertView alloc] initWithTitle:@"" message:@"Please enter RSS path:" delegate:self cancelButtonTitle:@"Add RSS" otherButtonTitles:nil];
+    [self AddRSSWithText:@"http://"];
+}
+
+- (void)AddRSSWithText: (NSString *)text {
+    
+    alert = [[UIAlertView alloc] initWithTitle:@"" message:@"Please enter correct RSS path:" delegate:self cancelButtonTitle:@"Add RSS" otherButtonTitles:@"Cancel", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     UITextField * alertTextField = [alert textFieldAtIndex:0];
-    alertTextField.placeholder = @"RSS path";
-    alertTextField.text = @"http://news.tut.by/rss/all.rss";
+    alertTextField.placeholder = @"http://news.tut.by/rss/all.rss";
+    alertTextField.text = text;
     [alert show];
+}
+
+- (IBAction)AddRSS:(UIButton *)sender {
+    
+    [self AddRSS];
 } //Create alert window to receive new RSS
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView == alert) {
-        _url = [[alertView textFieldAtIndex:0] text];
-        if ([self validateUrl:_url]) {
-            
-            urlUrl = [NSURL URLWithString:_url];
-            feeds = [[NSMutableArray alloc] init];
-            parser = [[NSXMLParser alloc] initWithContentsOfURL:urlUrl];
-            [parser setDelegate:self];
-            [parser setShouldResolveExternalEntities:NO];
-            isParsed = NO;
-            [self fadeBlackScreen];
-            [parser parse];
-            
-            if (isParsed) {
+    if (buttonIndex == 0) {
+        if (alertView == alert) {
+            _url = [[alertView textFieldAtIndex:0] text];
+            if ([self validateUrl:_url]) {
                 
+                urlUrl = [NSURL URLWithString:_url];
+                feeds = [[NSMutableArray alloc] init];
+                parser = [[NSXMLParser alloc] initWithContentsOfURL:urlUrl];
+                [parser setDelegate:self];
+                [parser setShouldResolveExternalEntities:NO];
+                isParsed = NO;
+                [self fadeBlackScreen];
+                [parser parse];
+                
+                if (isParsed) {
+                    
 #ifdef __CoreDataSupport
-                NSError *error;
-                NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"RssEntity"];
-                NSPredicate *isEqualToUrl = [NSPredicate predicateWithFormat:@"rssUrl == %@", _url];
-                [fetchRequest setPredicate:isEqualToUrl];
-                [fetchRequest setResultType:NSCountResultType];
-                NSArray *count = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-                if (![count[0] intValue]) {
-                    RssEntity *rssRow = [NSEntityDescription insertNewObjectForEntityForName:@"RssEntity" inManagedObjectContext:_managedObjectContext];
-                    rssRow.id = [NSDate date];
-                    rssRow.rssUrl = _url;
-                    if (![_managedObjectContext save:&error]) {
-                        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                    NSError *error;
+                    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"RssEntity"];
+                    NSPredicate *isEqualToUrl = [NSPredicate predicateWithFormat:@"rssUrl == %@", _url];
+                    [fetchRequest setPredicate:isEqualToUrl];
+                    [fetchRequest setResultType:NSCountResultType];
+                    NSArray *count = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+                    if (![count[0] intValue]) {
+                        RssEntity *rssRow = [NSEntityDescription insertNewObjectForEntityForName:@"RssEntity" inManagedObjectContext:_managedObjectContext];
+                        rssRow.id = [NSDate date];
+                        rssRow.rssUrl = _url;
+                        if (![_managedObjectContext save:&error]) {
+                            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                        }
                     }
-                }
 #else
-                if (![_RSSList containsObject:_url]) {
-                    [_RSSList addObject:[_url copy]];
-                    [_RSSList writeToFile:_ArrayFileName atomically:YES];
-                }
+                    if (![_RSSList containsObject:_url]) {
+                        [_RSSList addObject:[_url copy]];
+                        [_RSSList writeToFile:_ArrayFileName atomically:YES];
+                    }
 #endif
-            }
-            else {
-                [self fadeOutLabel];
+                } else {
+                    [self AddRSSWithText:_url];
+                    [self fadeOutLabel];
+                }
+            } else {
+                [self AddRSSWithText:_url];
             }
         }
+        
     }
-} //Processing alert window link
+ } //Processing alert window link
 
 /////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////// T A B L E //////////////////////
