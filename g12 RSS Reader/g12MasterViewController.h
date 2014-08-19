@@ -6,16 +6,18 @@
 //  Copyright (c) 2014 g12-Squad. All rights reserved.
 //
 
-#import "defines.h"
-#import "g12RSSList.h"
-
 @interface g12MasterViewController : UITableViewController <NSXMLParserDelegate>
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (copy) NSString *url;
-@property BOOL refreshList;
-@property NSMutableArray *RSSList; //RSS list from file
-@property NSString *ArrayFileName; //Name of file
+@property (nonatomic)           IBOutlet UITableView *tableView;
+@property (nonatomic, copy)     NSString *url;
+@property (nonatomic, assign)   BOOL refreshList;
+
+#ifdef __CoreDataSupport
+@property (nonatomic)           NSManagedObjectContext *managedObjectContext; //init from AppDelegate.m
+#else
+@property (nonatomic)           NSMutableArray *RSSList; //RSS list from file
+@property (nonatomic)           NSString *ArrayFileName; //Name of file
+#endif
 
 - (BOOL) validateUrl: (NSString *) candidate;
 - (IBAction)AddRSS:(UIBarButtonItem *)sender;

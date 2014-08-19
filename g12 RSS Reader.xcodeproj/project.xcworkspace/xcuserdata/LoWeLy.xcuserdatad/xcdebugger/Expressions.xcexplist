@@ -3,6 +3,17 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "-[g12MasterViewController viewDidLoad]:g12MasterViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "temp">
+            </PersistentString>
+            <PersistentString
+               value = "count[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[g12MasterViewController parser:didStartElement:namespaceURI:qualifiedName:attributes:]:g12MasterViewController.m">
          <PersistentStrings>
             <PersistentString

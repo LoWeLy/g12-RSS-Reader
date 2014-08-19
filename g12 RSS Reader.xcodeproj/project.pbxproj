@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		101D120119A27DE90099AC5E /* RssEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 101D120019A27DE90099AC5E /* RssEntity.m */; };
 		109878C919903752006C9F0E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109878C819903752006C9F0E /* Foundation.framework */; };
 		109878CB19903752006C9F0E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109878CA19903752006C9F0E /* CoreGraphics.framework */; };
 		109878CD19903752006C9F0E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109878CC19903752006C9F0E /* UIKit.framework */; };
@@ -26,7 +27,9 @@
 		109A39961998C69B008C5D78 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 109A39941998C69B008C5D78 /* Default@2x.png */; };
 		109A39981998C768008C5D78 /* Default@640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 109A39971998C768008C5D78 /* Default@640x1136.png */; };
 		10AE81FC199A5827000C83E1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 10AE81FB199A5827000C83E1 /* Default-568h@2x.png */; };
-		10C8CC14199330B800898353 /* g12RSSList.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C8CC13199330B800898353 /* g12RSSList.m */; };
+		10C8CC14199330B800898353 /* g12RSSListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C8CC13199330B800898353 /* g12RSSListViewController.m */; };
+		10FE655219A23677007EBD31 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10FE654E19A22C64007EBD31 /* CoreData.framework */; };
+		10FE655519A25184007EBD31 /* g12RSSReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 10FE655319A25184007EBD31 /* g12RSSReader.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		101D11FF19A27DE90099AC5E /* RssEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RssEntity.h; sourceTree = "<group>"; };
+		101D120019A27DE90099AC5E /* RssEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RssEntity.m; sourceTree = "<group>"; };
 		109878C519903752006C9F0E /* g12 RSS Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "g12 RSS Reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		109878C819903752006C9F0E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		109878CA19903752006C9F0E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -65,10 +70,11 @@
 		109A39941998C69B008C5D78 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		109A39971998C768008C5D78 /* Default@640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@640x1136.png"; sourceTree = "<group>"; };
 		10AE81FB199A5827000C83E1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		10C8CC12199330B800898353 /* g12RSSList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = g12RSSList.h; sourceTree = "<group>"; };
-		10C8CC13199330B800898353 /* g12RSSList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = g12RSSList.m; sourceTree = "<group>"; };
+		10C8CC12199330B800898353 /* g12RSSListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = g12RSSListViewController.h; sourceTree = "<group>"; };
+		10C8CC13199330B800898353 /* g12RSSListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = g12RSSListViewController.m; sourceTree = "<group>"; };
 		10C8CC1519933AF300898353 /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
 		10FE654E19A22C64007EBD31 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		10FE655419A25184007EBD31 /* g12RSSReader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = g12RSSReader.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10FE655219A23677007EBD31 /* CoreData.framework in Frameworks */,
 				109878CB19903752006C9F0E /* CoreGraphics.framework in Frameworks */,
 				109878CD19903752006C9F0E /* UIKit.framework in Frameworks */,
 				109878C919903752006C9F0E /* Foundation.framework in Frameworks */,
@@ -131,13 +138,16 @@
 			children = (
 				109878D719903752006C9F0E /* g12AppDelegate.h */,
 				109878D819903752006C9F0E /* g12AppDelegate.m */,
-				109878DA19903752006C9F0E /* Main.storyboard */,
 				109878DD19903752006C9F0E /* g12MasterViewController.h */,
 				109878DE19903752006C9F0E /* g12MasterViewController.m */,
 				109878E019903752006C9F0E /* g12DetailViewController.h */,
 				109878E119903752006C9F0E /* g12DetailViewController.m */,
-				10C8CC12199330B800898353 /* g12RSSList.h */,
-				10C8CC13199330B800898353 /* g12RSSList.m */,
+				10C8CC12199330B800898353 /* g12RSSListViewController.h */,
+				10C8CC13199330B800898353 /* g12RSSListViewController.m */,
+				101D11FF19A27DE90099AC5E /* RssEntity.h */,
+				101D120019A27DE90099AC5E /* RssEntity.m */,
+				109878DA19903752006C9F0E /* Main.storyboard */,
+				10FE655319A25184007EBD31 /* g12RSSReader.xcdatamodeld */,
 				109878CF19903752006C9F0E /* Supporting Files */,
 				109A39921998C69B008C5D78 /* Sources */,
 			);
@@ -289,11 +299,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				101D120119A27DE90099AC5E /* RssEntity.m in Sources */,
 				109878E219903752006C9F0E /* g12DetailViewController.m in Sources */,
 				109878DF19903752006C9F0E /* g12MasterViewController.m in Sources */,
 				109878D519903752006C9F0E /* main.m in Sources */,
 				109878D919903752006C9F0E /* g12AppDelegate.m in Sources */,
-				10C8CC14199330B800898353 /* g12RSSList.m in Sources */,
+				10C8CC14199330B800898353 /* g12RSSListViewController.m in Sources */,
+				10FE655519A25184007EBD31 /* g12RSSReader.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +520,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		10FE655319A25184007EBD31 /* g12RSSReader.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				10FE655419A25184007EBD31 /* g12RSSReader.xcdatamodel */,
+			);
+			currentVersion = 10FE655419A25184007EBD31 /* g12RSSReader.xcdatamodel */;
+			path = g12RSSReader.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 109878BD19903752006C9F0E /* Project object */;
 }

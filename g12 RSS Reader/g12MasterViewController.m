@@ -8,7 +8,8 @@
 
 #import "g12MasterViewController.h"
 #import "g12DetailViewController.h"
-#import "g12RSSList.h"
+#import "g12RSSListViewController.h"
+#import "RssEntity.h"
 
 @interface g12MasterViewController () {
     NSXMLParser *parser; //Parser
@@ -16,6 +17,7 @@
     NSMutableDictionary *item; //Stuff for parsing
     NSMutableString *title; //Stuff for parsing
     NSMutableString *link; //Stuff for parsing
+    NSMutableString *date; //Stuff for parsing
     NSString *element; //Stuff for parsing
     NSURL *urlUrl; //NSURL
     BOOL isItem; //Switch for parsing
@@ -23,6 +25,8 @@
     UIAlertView *alert; //Alert window
     UILabel *welcomeLabel; //Black screen with text when loading
     UIWindow *mainWindow; //Main window for borders and sublayering it
+    NSDate *dateDate; //Date in NSDate format
+    NSDateFormatter *dateFormatter; //Date formatter
 }
 
 @end
@@ -77,12 +81,35 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
+    dateDate = [[NSDate alloc]init]; //Init NSDate
+    dateFormatter = [[NSDateFormatter alloc]init]; //Init date formatter
     _refreshList = YES; //Init refresh switch
     mainWindow = [[UIApplication sharedApplication].delegate window]; //Get main window
-    _ArrayFileName = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:RSSFileName]; //Get full file name
-    _RSSList = [[NSMutableArray alloc] initWithArray:[[NSArray alloc] initWithContentsOfFile:_ArrayFileName]]; //Restore RSS list from file to array
     if (!_url) {
+#ifdef __CoreDataSupport
+        NSError *error;
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"RssEntity"];
+        NSArray *fetchedArray = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        for (RssEntity *rssRow in fetchedArray) {
+            NSLog(@"%@ - %@", rssRow.id, rssRow.rssUrl);
+        }
+        
+        if (fetchedArray.count) {
+            RssEntity *rssRow = fetchedArray[0];
+            _url = rssRow.rssUrl;
+        } else {
+            RssEntity *rssRow = [NSEntityDescription insertNewObjectForEntityForName:@"RssEntity" inManagedObjectContext:_managedObjectContext];
+            rssRow.id = [NSDate date];
+            _url = @"http://images.apple.com/main/rss/hotnews/hotnews.rss";
+            rssRow.rssUrl = _url;
+            if (![_managedObjectContext save:&error]) {
+                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+            }
+        }
+#else
+        _ArrayFileName = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:RSSFileName]; //Get full file name
+        _RSSList = [[NSMutableArray alloc] initWithArray:[[NSArray alloc] initWithContentsOfFile:_ArrayFileName]]; //Restore RSS list from file to array
+        
         if (_RSSList.count) {
             _url = _RSSList[0];
         } else {
@@ -90,11 +117,14 @@
             [_RSSList addObject:[_url copy]];
             [_RSSList writeToFile:_ArrayFileName atomically:YES];
         }
+        
+#endif
     } //Init URL
 } //Various inits
 
 - (void)viewWillAppear:(BOOL)animated {
     
+    [super viewWillAppear:animated];
     if (!urlUrl) urlUrl = [[NSURL alloc] initWithString:_url]; //Getting URL as NSURL from file or string
     
     if (![urlUrl.absoluteString isEqualToString:_url] || _refreshList) {
@@ -105,6 +135,8 @@
 } //Fade black screen with text if reloading other link or Refresh is YES (->)
 
 - (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
     if (![urlUrl.absoluteString isEqualToString:_url] || _refreshList) {
         
         _refreshList = NO;
@@ -147,9 +179,32 @@
             [self fadeBlackScreen];
             [parser parse];
             
-            if ( (![_RSSList containsObject:_url]) && (isParsed) ) {
-                [_RSSList addObject:[_url copy]];
-                [_RSSList writeToFile:_ArrayFileName atomically:YES];
+            if (isParsed) {
+                
+#ifdef __CoreDataSupport
+                NSError *error;
+                NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"RssEntity"];
+                NSPredicate *isEqualToUrl = [NSPredicate predicateWithFormat:@"rssUrl == %@", _url];
+                [fetchRequest setPredicate:isEqualToUrl];
+                [fetchRequest setResultType:NSCountResultType];
+                NSArray *count = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+                if (![count[0] intValue]) {
+                    RssEntity *rssRow = [NSEntityDescription insertNewObjectForEntityForName:@"RssEntity" inManagedObjectContext:_managedObjectContext];
+                    rssRow.id = [NSDate date];
+                    rssRow.rssUrl = _url;
+                    if (![_managedObjectContext save:&error]) {
+                        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                    }
+                }
+#else
+                if (![_RSSList containsObject:_url]) {
+                    [_RSSList addObject:[_url copy]];
+                    [_RSSList writeToFile:_ArrayFileName atomically:YES];
+                }
+#endif
+            }
+            else {
+                [self fadeOutLabel];
             }
         }
     }
@@ -170,10 +225,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    NSInteger row = indexPath.row;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"%d) %@", indexPath.row + 1, [[feeds objectAtIndex:indexPath.row] objectForKey:@"title"]];
-
-    cell.backgroundColor = Rgb2UIColor(255, (double) 128 + (indexPath.row + 1) * 127 / feeds.count, (double) 0 + (indexPath.row + 1) * 255 / feeds.count);
+    cell.textLabel.text = [[feeds objectAtIndex:row] objectForKey:@"title"];
+    dateDate = [[feeds objectAtIndex:row] objectForKey:@"date"];
+    [dateFormatter setDateFormat:@"dd.MM - HH:mm (VVVV)"];
+    cell.detailTextLabel.text = [dateFormatter stringFromDate:dateDate];
+    
+    cell.backgroundColor = Rgb2UIColor(255, (double) 128 + (row + 1) * 127 / feeds.count, (double) 0 + (row + 1) * 255 / feeds.count);
     return cell;
 } //Displays all cells and making them gradient
 
@@ -190,6 +249,7 @@
         item = [[NSMutableDictionary alloc] init];
         title = [[NSMutableString alloc] init];
         link = [[NSMutableString alloc] init];
+        date = [[NSMutableString alloc] init];
         isItem = YES;
         isParsed = YES;
     }
@@ -203,6 +263,8 @@
             [title appendString:string];
         } else if (([element isEqualToString:@"link"]) && ([string rangeOfString:@"\n"].location == NSNotFound)) {
             [link appendString:string];
+        } else if (([element isEqualToString:@"pubDate"]) && ([string rangeOfString:@"\n"].location == NSNotFound)) {
+            [date appendString:string];
         }
     }
     
@@ -213,6 +275,17 @@
     if ([elementName isEqualToString:@"item"]) {
         [item setObject:title forKey:@"title"];
         [item setObject:link forKey:@"link"];
+        
+        [dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss Z"]; // @"Sun, 24 Mar 2013 00:42:13 +0200";
+        dateDate = [dateFormatter dateFromString:date];
+        if (!dateDate)
+        {
+            [dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss z"]; // @"Tue, 29 Jul 2014 12:34:16 PDT"
+            dateDate = [dateFormatter dateFromString:date];
+        }
+        [item setObject:dateDate forKey:@"date"];
+        
+
         isItem = NO;
         
         [feeds addObject:[item copy]];
