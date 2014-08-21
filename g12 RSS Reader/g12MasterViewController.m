@@ -90,9 +90,9 @@
         NSError *error;
         NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"RssEntity"];
         NSArray *fetchedArray = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-        for (RssEntity *rssRow in fetchedArray) {
-            NSLog(@"%@ - %@", rssRow.id, rssRow.rssUrl);
-        }
+//        for (RssEntity *rssRow in fetchedArray) {
+//            NSLog(@"%@ - %@", rssRow.id, rssRow.rssUrl);
+//        }
         
         if (fetchedArray.count) {
             RssEntity *rssRow = fetchedArray[0];
@@ -178,9 +178,10 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         if (alertView == alert) {
-            _url = [[alertView textFieldAtIndex:0] text];
-            if ([self validateUrl:_url]) {
+            NSString *tempUrl = [NSString stringWithString:[[alertView textFieldAtIndex:0] text]];
+            if ([self validateUrl:tempUrl]) {
                 
+                _url = tempUrl;
                 urlUrl = [NSURL URLWithString:_url];
                 feeds = [[NSMutableArray alloc] init];
                 parser = [[NSXMLParser alloc] initWithContentsOfURL:urlUrl];
@@ -218,10 +219,9 @@
                     [self fadeOutLabel];
                 }
             } else {
-                [self AddRSSWithText:_url];
+                [self AddRSSWithText:tempUrl];
             }
         }
-        
     }
  } //Processing alert window link
 
