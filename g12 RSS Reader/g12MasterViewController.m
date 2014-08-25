@@ -33,9 +33,9 @@
 
 @implementation g12MasterViewController
 
-/////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////// M Y   F U N C S ////////////////
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+////////////////////// M Y   F U N C S ////////////////
+///////////////////////////////////////////////////////
 #pragma mark - My Funtions
 - (BOOL)validateUrl: (NSString *) candidate {
     NSString *urlRegEx =
@@ -52,39 +52,41 @@
                          welcomeLabel.alpha = 0.0;
                      }
                      completion:^(BOOL finished) {
-                         [welcomeLabel removeFromSuperview];
+//                         [welcomeLabel removeFromSuperview];
                      }];
 } //Animation of fade
 
 - (void)fadeBlackScreen {
-    welcomeLabel = [[UILabel alloc] initWithFrame:mainWindow.bounds];
+    [welcomeLabel setText:[NSString stringWithFormat:@"Loading: \n%@",_url]];
+    welcomeLabel.alpha = 1.0;
+//    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fadeOutLabel) userInfo:nil repeats:NO];
+} //Fade black screen with text when loading
+
+///////////////////////////////////////////////////////
+////////////////////// V I E W   L O A D //////////////
+///////////////////////////////////////////////////////
+#pragma mark - View Funtions
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    mainWindow = [[UIApplication sharedApplication].delegate window]; //Get main window
+    welcomeLabel = [[UILabel alloc] initWithFrame:mainWindow.frame];
     [welcomeLabel setTextColor:[UIColor whiteColor]];
     [welcomeLabel setBackgroundColor:[UIColor blackColor]];
-    [welcomeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 56.0f]];
-    [welcomeLabel setText:[NSString stringWithFormat:@"Loading: \n%@",_url]];
     [welcomeLabel setTextAlignment:NSTextAlignmentCenter];
     [welcomeLabel setAdjustsFontSizeToFitWidth:YES];
     [welcomeLabel setNumberOfLines:2];
     [welcomeLabel setMinimumScaleFactor:0.1];
     [welcomeLabel setShadowColor:[UIColor grayColor]];
     [welcomeLabel setShadowOffset:CGSizeMake( 1.5, 1.5)];
-    [welcomeLabel setCenter:self.view.center];
-    [mainWindow addSubview:welcomeLabel];
-//    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(fadeOutLabel) userInfo:nil repeats:NO];
-} //Fade black screen with text when loading
-
-/////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////// V I E W   L O A D //////////////
-/////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - View Funtions
-
-- (void)viewDidLoad {
-    
-    [super viewDidLoad];
+    [welcomeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 56.0f]];
+    [welcomeLabel setCenter:mainWindow.center];
+    welcomeLabel.alpha = 1.0;
+    [mainWindow addSubview:welcomeLabel]; //Welcome & load label inits
     dateDate = [[NSDate alloc]init]; //Init NSDate
     dateFormatter = [[NSDateFormatter alloc]init]; //Init date formatter
     _refreshList = YES; //Init refresh switch
-    mainWindow = [[UIApplication sharedApplication].delegate window]; //Get main window
     if (!_url) {
 #ifdef __CoreDataSupport
         NSError *error;
@@ -150,9 +152,9 @@
     }
 } //(->) and parsing it a bit later
 
-/////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////// T O P   B A R //////////////////
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+////////////////////// T O P   B A R //////////////////
+///////////////////////////////////////////////////////
 #pragma mark - Top Bar Items
 
 - (void)AddRSS {
@@ -225,9 +227,9 @@
     }
  } //Processing alert window link
 
-/////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////// T A B L E //////////////////////
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+////////////////////// T A B L E //////////////////////
+///////////////////////////////////////////////////////
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -251,9 +253,9 @@
     return cell;
 } //Displays all cells and making them gradient
 
-/////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////// P A R S E R ////////////////////
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+////////////////////// P A R S E R ////////////////////
+///////////////////////////////////////////////////////
 #pragma mark - Parser
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
@@ -312,9 +314,9 @@
     [self fadeOutLabel]; //Parse finished so let's show results
 } //Refresh table view
 
-/////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////// S E G U E //////////////////////
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+////////////////////// S E G U E //////////////////////
+///////////////////////////////////////////////////////
 #pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -325,5 +327,28 @@
         [[segue destinationViewController] setMasterController:self];
     }
 } //Do stuff for segue
+
+///////////////////////////////////////////////////////
+////////////////////// R O T A T I O N ////////////////
+///////////////////////////////////////////////////////
+#pragma mark - Rotation
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    double height = mainWindow.bounds.size.height;
+    double width = mainWindow.bounds.size.width;
+    if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
+        [welcomeLabel setTransform:CGAffineTransformMakeRotation(0)];
+        welcomeLabel.bounds = CGRectMake(0, 0, width, height);
+    }
+    else if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) {
+        [welcomeLabel setTransform:CGAffineTransformMakeRotation(-M_PI/2)];
+        welcomeLabel.bounds = CGRectMake(0, 0, height, width);
+    }
+    else if (toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+        [welcomeLabel setTransform:CGAffineTransformMakeRotation(M_PI/2)];
+        welcomeLabel.bounds = CGRectMake(0, 0, height, width);
+    }
+}
+
 
 @end
