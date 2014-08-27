@@ -32,42 +32,79 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZyZ-h9-t8H" customClass="FBLoginView">
-                                <rect key="frame" x="20" y="264" width="280" height="39"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZyZ-h9-t8H" customClass="FBLoginView">
+                                <rect key="frame" x="20" y="231" width="280" height="39"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="tlP-wn-btB"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="n9P-1R-cVA" id="JIt-GB-pNO"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sBz-pH-NvR">
-                                <rect key="frame" x="99" y="311" width="122" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Start RSS Reader">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="pGg-6v-bdr" kind="push" identifier="Master View" id="3EY-6A-7xU"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="quH-HJ-4rW" customClass="FBProfilePictureView">
-                                <rect key="frame" x="95" y="126" width="130" height="130"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="quH-HJ-4rW" customClass="FBProfilePictureView">
+                                <rect key="frame" x="95" y="96" width="130" height="130"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="130" id="PpL-Vu-PlL"/>
+                                    <constraint firstAttribute="height" constant="130" id="bBC-Q9-lXw"/>
+                                </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uzt-cw-EcI">
-                                <rect key="frame" x="20" y="96" width="280" height="22"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uzt-cw-EcI">
+                                <rect key="frame" x="20" y="69" width="280" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="rSq-jD-xMf"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZyZ-h9-t8H" firstAttribute="top" secondItem="quH-HJ-4rW" secondAttribute="bottom" constant="5" id="56A-9s-Dhk"/>
+                            <constraint firstItem="Uzt-cw-EcI" firstAttribute="leading" secondItem="sc1-zN-vZx" secondAttribute="leading" constant="20" id="CH2-OP-nCE"/>
+                            <constraint firstAttribute="trailing" secondItem="Uzt-cw-EcI" secondAttribute="trailing" constant="20" id="Pn1-Vj-1fc"/>
+                            <constraint firstItem="ZyZ-h9-t8H" firstAttribute="leading" secondItem="sc1-zN-vZx" secondAttribute="leading" constant="20" id="R46-Fx-wpb"/>
+                            <constraint firstAttribute="trailing" secondItem="ZyZ-h9-t8H" secondAttribute="trailing" constant="20" id="W6V-cH-Ky6"/>
+                            <constraint firstItem="Uzt-cw-EcI" firstAttribute="top" secondItem="Bry-xt-JlS" secondAttribute="bottom" constant="5" id="YUB-GH-kdZ"/>
+                            <constraint firstAttribute="centerX" secondItem="ZyZ-h9-t8H" secondAttribute="centerX" id="azc-8Y-PTB"/>
+                            <constraint firstItem="quH-HJ-4rW" firstAttribute="top" secondItem="Uzt-cw-EcI" secondAttribute="bottom" constant="5" id="cmI-wu-txN"/>
+                            <constraint firstAttribute="centerX" secondItem="quH-HJ-4rW" secondAttribute="centerX" id="dIS-Dw-p5s"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Facebook Login" id="bSx-oU-nnB"/>
+                    <navigationItem key="navigationItem" title="Facebook Login" id="bSx-oU-nnB">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="ltJ-3X-eWv">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="w92-qx-EO4">
+                                <rect key="frame" x="16" y="7" width="50" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Share!">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareLinkWithShareDialog:" destination="n9P-1R-cVA" eventType="touchUpInside" id="Bdt-PF-XGp"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="0o5-FK-Gv2">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sBz-pH-NvR">
+                                <rect key="frame" x="254" y="7" width="50" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Start">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="pGg-6v-bdr" kind="push" identifier="Master View" id="3EY-6A-7xU"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="ShareLinkWithShareDialogButton" destination="w92-qx-EO4" id="Spo-hs-3JK"/>
                         <outlet property="loginView" destination="ZyZ-h9-t8H" id="CzR-qO-ysZ"/>
                         <outlet property="nameLabel" destination="Uzt-cw-EcI" id="UMg-KZ-13m"/>
                         <outlet property="profilePictureView" destination="quH-HJ-4rW" id="a1p-Iq-nzD"/>
