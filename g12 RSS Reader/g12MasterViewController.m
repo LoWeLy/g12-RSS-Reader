@@ -29,6 +29,8 @@
     NSDateFormatter *dateFormatter; //Date formatter
 }
 
+- (void) rotateLabel:(UIInterfaceOrientation)toInterfaceOrientation;
+
 @end
 
 @implementation g12MasterViewController
@@ -68,7 +70,6 @@
 #pragma mark - View Funtions
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
     mainWindow = [[UIApplication sharedApplication].delegate window]; //Get main window
     welcomeLabel = [[UILabel alloc] initWithFrame:mainWindow.frame];
@@ -81,7 +82,8 @@
     [welcomeLabel setShadowOffset:CGSizeMake( 1.5, 1.5)];
     [welcomeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 20.0f]];
     [welcomeLabel setCenter:mainWindow.center];
-    welcomeLabel.alpha = 1.0;
+//    welcomeLabel.alpha = 1.0;
+    [self rotateLabel:self.interfaceOrientation];
     [mainWindow addSubview:welcomeLabel]; //Welcome & load label inits
     dateDate = [[NSDate alloc]init]; //Init NSDate
     dateFormatter = [[NSDateFormatter alloc]init]; //Init date formatter
@@ -332,7 +334,7 @@
 ///////////////////////////////////////////////////////
 #pragma mark - Rotation
 
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void) rotateLabel:(UIInterfaceOrientation)toInterfaceOrientation {
     double height = mainWindow.bounds.size.height;
     double width = mainWindow.bounds.size.width;
     NSLog(@"%@", NSStringFromCGRect(mainWindow.bounds));
@@ -348,6 +350,10 @@
         [welcomeLabel setTransform:CGAffineTransformMakeRotation(M_PI/2)];
         welcomeLabel.bounds = CGRectMake(0, 0, height, width);
     }
+}
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self rotateLabel:toInterfaceOrientation];
 }
 
 @end

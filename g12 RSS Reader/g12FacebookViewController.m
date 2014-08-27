@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet FBLoginView *loginView;
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
-@property (strong, nonatomic) IBOutlet UIButton *ShareLinkWithShareDialogButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *ShareLinkWithShareDialogButton;
 
 @end
 

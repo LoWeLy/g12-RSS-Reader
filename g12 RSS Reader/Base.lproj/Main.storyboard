@@ -77,34 +77,25 @@
                             <constraint firstAttribute="centerX" secondItem="quH-HJ-4rW" secondAttribute="centerX" id="dIS-Dw-p5s"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Facebook Login" id="bSx-oU-nnB">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="ltJ-3X-eWv">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="w92-qx-EO4">
-                                <rect key="frame" x="16" y="7" width="50" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Share!">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="shareLinkWithShareDialog:" destination="n9P-1R-cVA" eventType="touchUpInside" id="Bdt-PF-XGp"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="leftBarButtonItem" title="Share!" id="KaG-0w-AJS">
+                            <connections>
+                                <action selector="shareLinkWithShareDialog:" destination="n9P-1R-cVA" id="ige-eG-Zyi"/>
+                            </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="0o5-FK-Gv2">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sBz-pH-NvR">
-                                <rect key="frame" x="254" y="7" width="50" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Start">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="pGg-6v-bdr" kind="push" identifier="Master View" id="3EY-6A-7xU"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" id="FXG-n9-teZ">
+                            <string key="title" base64-UTF8="YES">
+EFN0YXJ0A
+</string>
+                            <connections>
+                                <segue destination="pGg-6v-bdr" kind="push" identifier="Master View" id="Ish-v9-0r0"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="ShareLinkWithShareDialogButton" destination="w92-qx-EO4" id="Spo-hs-3JK"/>
+                        <outlet property="ShareLinkWithShareDialogButton" destination="KaG-0w-AJS" id="W9A-Bj-WaS"/>
                         <outlet property="loginView" destination="ZyZ-h9-t8H" id="CzR-qO-ysZ"/>
                         <outlet property="nameLabel" destination="Uzt-cw-EcI" id="UMg-KZ-13m"/>
                         <outlet property="profilePictureView" destination="quH-HJ-4rW" id="a1p-Iq-nzD"/>
