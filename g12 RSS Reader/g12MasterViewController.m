@@ -77,10 +77,9 @@
     [welcomeLabel setTextAlignment:NSTextAlignmentCenter];
     [welcomeLabel setAdjustsFontSizeToFitWidth:YES];
     [welcomeLabel setNumberOfLines:2];
-    [welcomeLabel setMinimumScaleFactor:0.1];
     [welcomeLabel setShadowColor:[UIColor grayColor]];
     [welcomeLabel setShadowOffset:CGSizeMake( 1.5, 1.5)];
-    [welcomeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 56.0f]];
+    [welcomeLabel setFont:[UIFont fontWithName: @"Trebuchet MS" size: 20.0f]];
     [welcomeLabel setCenter:mainWindow.center];
     welcomeLabel.alpha = 1.0;
     [mainWindow addSubview:welcomeLabel]; //Welcome & load label inits
@@ -336,6 +335,7 @@
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     double height = mainWindow.bounds.size.height;
     double width = mainWindow.bounds.size.width;
+    NSLog(@"%@", NSStringFromCGRect(mainWindow.bounds));
     if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
         [welcomeLabel setTransform:CGAffineTransformMakeRotation(0)];
         welcomeLabel.bounds = CGRectMake(0, 0, width, height);
@@ -349,6 +349,5 @@
         welcomeLabel.bounds = CGRectMake(0, 0, height, width);
     }
 }
-
 
 @end

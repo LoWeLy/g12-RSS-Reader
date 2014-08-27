@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		100B401019ADF05900086F24 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 100B400F19ADF05900086F24 /* FacebookSDK.framework */; };
+		100B401319AE050D00086F24 /* g12FacebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 100B401219AE050D00086F24 /* g12FacebookViewController.m */; };
 		101D120119A27DE90099AC5E /* RssEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 101D120019A27DE90099AC5E /* RssEntity.m */; };
 		109878C919903752006C9F0E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109878C819903752006C9F0E /* Foundation.framework */; };
 		109878CB19903752006C9F0E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 109878CA19903752006C9F0E /* CoreGraphics.framework */; };
@@ -43,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		100B400F19ADF05900086F24 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		100B401119AE050D00086F24 /* g12FacebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = g12FacebookViewController.h; sourceTree = "<group>"; };
+		100B401219AE050D00086F24 /* g12FacebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = g12FacebookViewController.m; sourceTree = "<group>"; };
 		101D11FF19A27DE90099AC5E /* RssEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RssEntity.h; sourceTree = "<group>"; };
 		101D120019A27DE90099AC5E /* RssEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RssEntity.m; sourceTree = "<group>"; };
 		109878C519903752006C9F0E /* g12 RSS Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "g12 RSS Reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +88,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				10FE655219A23677007EBD31 /* CoreData.framework in Frameworks */,
+				100B401019ADF05900086F24 /* FacebookSDK.framework in Frameworks */,
 				109878CB19903752006C9F0E /* CoreGraphics.framework in Frameworks */,
 				109878CD19903752006C9F0E /* UIKit.framework in Frameworks */,
 				109878C919903752006C9F0E /* Foundation.framework in Frameworks */,
@@ -124,6 +130,7 @@
 		109878C719903752006C9F0E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				100B400F19ADF05900086F24 /* FacebookSDK.framework */,
 				10FE654E19A22C64007EBD31 /* CoreData.framework */,
 				109878C819903752006C9F0E /* Foundation.framework */,
 				109878CA19903752006C9F0E /* CoreGraphics.framework */,
@@ -138,6 +145,8 @@
 			children = (
 				109878D719903752006C9F0E /* g12AppDelegate.h */,
 				109878D819903752006C9F0E /* g12AppDelegate.m */,
+				100B401119AE050D00086F24 /* g12FacebookViewController.h */,
+				100B401219AE050D00086F24 /* g12FacebookViewController.m */,
 				109878DD19903752006C9F0E /* g12MasterViewController.h */,
 				109878DE19903752006C9F0E /* g12MasterViewController.m */,
 				109878E019903752006C9F0E /* g12DetailViewController.h */,
@@ -301,6 +310,7 @@
 			files = (
 				101D120119A27DE90099AC5E /* RssEntity.m in Sources */,
 				109878E219903752006C9F0E /* g12DetailViewController.m in Sources */,
+				100B401319AE050D00086F24 /* g12FacebookViewController.m in Sources */,
 				109878DF19903752006C9F0E /* g12MasterViewController.m in Sources */,
 				109878D519903752006C9F0E /* main.m in Sources */,
 				109878D919903752006C9F0E /* g12AppDelegate.m in Sources */,
@@ -429,9 +439,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/LoWeLy/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "g12 RSS Reader/g12 RSS Reader-Prefix.pch";
 				INFOPLIST_FILE = "g12 RSS Reader/g12 RSS Reader-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -441,9 +456,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/LoWeLy/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "g12 RSS Reader/g12 RSS Reader-Prefix.pch";
 				INFOPLIST_FILE = "g12 RSS Reader/g12 RSS Reader-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

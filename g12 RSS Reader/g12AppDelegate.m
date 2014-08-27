@@ -7,7 +7,7 @@
 //
 
 #import "g12AppDelegate.h"
-#import "g12MasterViewController.h"
+#import "g12FacebookViewController.h"
 
 @implementation g12AppDelegate
 
@@ -20,12 +20,22 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 #ifdef __CoreDataSupport
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    g12MasterViewController *controller = (g12MasterViewController *)navigationController.topViewController;
+    g12FacebookViewController *controller = (g12FacebookViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
 #endif
+    [FBLoginView class];
+    [FBProfilePictureView class];
     return YES;
 }
-							
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
+    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    // You can add your app-specific url handling code here if needed
+    return wasHandled;
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

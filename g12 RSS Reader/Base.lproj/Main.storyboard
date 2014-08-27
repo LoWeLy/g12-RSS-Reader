@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rS3-R9-Ivy">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -12,12 +13,69 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="pGg-6v-bdr" kind="relationship" relationship="rootViewController" id="Kgk-2Z-6dn"/>
+                        <segue destination="n9P-1R-cVA" kind="relationship" relationship="rootViewController" id="XJz-si-iut"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eq9-QA-ai8" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1" y="64"/>
+            <point key="canvasLocation" x="-631" y="64"/>
+        </scene>
+        <!--G12 Facebook View Controller - Facebook Login-->
+        <scene sceneID="iah-gs-2Bw">
+            <objects>
+                <viewController id="n9P-1R-cVA" customClass="g12FacebookViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bry-xt-JlS"/>
+                        <viewControllerLayoutGuide type="bottom" id="KxW-FG-OAq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sc1-zN-vZx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZyZ-h9-t8H" customClass="FBLoginView">
+                                <rect key="frame" x="20" y="264" width="280" height="39"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="n9P-1R-cVA" id="JIt-GB-pNO"/>
+                                </connections>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sBz-pH-NvR">
+                                <rect key="frame" x="99" y="311" width="122" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Start RSS Reader">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="pGg-6v-bdr" kind="push" identifier="Master View" id="3EY-6A-7xU"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="quH-HJ-4rW" customClass="FBProfilePictureView">
+                                <rect key="frame" x="95" y="126" width="130" height="130"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uzt-cw-EcI">
+                                <rect key="frame" x="20" y="96" width="280" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Facebook Login" id="bSx-oU-nnB"/>
+                    <connections>
+                        <outlet property="loginView" destination="ZyZ-h9-t8H" id="CzR-qO-ysZ"/>
+                        <outlet property="nameLabel" destination="Uzt-cw-EcI" id="UMg-KZ-13m"/>
+                        <outlet property="profilePictureView" destination="quH-HJ-4rW" id="a1p-Iq-nzD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T1N-Q5-LkM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-53" y="64"/>
         </scene>
         <!--G12 Master View Controller - Master-->
         <scene sceneID="VgW-fR-Quf">
@@ -122,7 +180,7 @@
                             <outlet property="delegate" destination="KKJ-4E-WTc" id="y0t-4D-bIc"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="NbC-Xl-VGA"/>
+                    <navigationItem key="navigationItem" title="Available RSS list" id="NbC-Xl-VGA"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXK-E5-LQL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
